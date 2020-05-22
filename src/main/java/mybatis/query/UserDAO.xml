@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hong.dao.UserMapper">
+
+	<resultMap type="com.hong.vo.UserVO" id="UserVO">
+		<result property="useremail" column="USR_ID"/>     
+		<result property="userpw" column="USR_PSWD"/>
+		<result property="username" column="USR_NM"/>
+		<result property="usergender" column="USERGENDER"/>
+	</resultMap>
+	
+	<insert id="insertUser" parameterType="com.hong.vo.UserVO">
+		INSERT INTO TB_USR
+			(USR_ID, USR_PSWD, USR_NM) 
+		VALUES
+			(#{useremail}, #{userpw}, #{username} )
+	</insert>
+	
+	<select id="loginUser" parameterType="com.hong.vo.UserVO" resultMap="UserVO">
+		SELECT USR_ID, USR_PSWD, USR_NM
+    	FROM TB_USR
+		WHERE USR_ID=#{useremail} AND USR_PSWD=#{userpw}
+	</select>
+</mapper>
+

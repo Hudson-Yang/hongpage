@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hong.dao.UserMapper">
+
+	<resultMap type="com.hong.vo.BbsVO" id="BbsVO">
+		<result property="bno" column="BRD_NO"/>
+		<result property="writer" column="CUSER"/>
+		<result property="subject" column="BRD_TIT"/>
+		<result property="content" column="BRD_DESCR"/>
+		<result property="date" column="CDATE"/>
+	</resultMap>
+	
+	<!-- 게시글 전체목록 조회 및 검색조회  -->
+	<select id="selectAllBbs" parameterType="com.hong.vo.BbsVO" resultMap="BbsVO">
+			SELECT BRD_NO, CUSER, BRD_TIT, BRD_DESCR, CDATE, viewcnt
+			FROM hongpage.TB_BRD
+			ORDER BY BRD_NO DESC, CDATE DESC
+	</select>
+	
+	
+	<select id="selectList" parameterType="hashmap" resultMap="BbsVO">	
+
+			SELECT 
+				BRD_NO, CUSER, BRD_TIT, BRD_DESCR, CDATE, viewcnt
+			FROM 
+				hongpage.TB_BRD
+			<!-- 검색조건 
+			<include refid="search"></include> -->
+			ORDER BY BRD_NO DESC, CDATE DESC 
+			LIMIT #{start}, #{end}
+	
+	</select>
+	
+	<select id="countArticle" parameterType="java.util.HashMap" resultType="int">
+	SELECT COUNT(BRD_NO)
+	FROM hongpage.TB_BRD
+<!-- 	<if test="searchOption != null and !searchOption.equals('') and keyword != null and !keyword.equals('')">
+	  WHERE CTGRY_CD = #{searchOption}
+	  AND BRD_TIT= #{keyword}
+	</if> -->
+</select>
+
+  <sql id="search">
+    <choose>
+        <!-- 검색옵션이 전체 검색일 경우 -->
+        <when test="searchOption == 'all'">
+            WHERE CUSER like '%'||#{keyword}||'%' 
+            OR BRD_DESCR like '%'||#{keyword}||'%'
+            OR BRD_TIT like '%'||#{keyword}||'%'
+        </when>
+        <!-- 전체 검색이 아닐 경우 -->
+        <otherwise>
+            WHERE ${searchOption} like '%'||#{keyword}||'%'
+        </otherwise>
+    </choose>
+</sql> 
+	
+	<select id="selectBbs" parameterType="com.hong.vo.BbsVO" resultMap="BbsVO">
+		SELECT BRD_NO, CUSER, BRD_TIT, BRD_DESCR, CDATE, viewcnt
+		FROM hongpage.TB_BRD
+		WHERE BRD_NO=#{bNum};
+	</select>
+	 
+	<select id="rowCount" resultType="int">
+		SELECT COUNT(BRD_NO)
+    	FROM hongpage.TB_BRD
+	</select>
+	
+	<insert id="insertBbs" parameterType="com.hong.vo.BbsVO" useGeneratedKeys="true" keyProperty="bno">
+		INSERT INTO hongpage.TB_BRD
+			(BRD_NO, BRD_TIT, BRD_DESCR, CUSER, CDATE) 
+		VALUES
+			(#{bno}, #{subject}, #{content}, #{writer}, #{date} )
+	</insert>
+	
+	<update id="updateBbs" parameterType="com.hong.vo.BbsVO">
+		UPDATE hongpage.TB_BRD
+			SET BRD_TIT=#{subject}, BRD_DESCR=#{content}, #{date}  
+		WHERE BRD_NO=#{bno}
+	</update>
+	
+	<delete id="deleteBbs">
+		DELETE FROM hongpage.TB_BRD
+		WHERE BRD_NO=#{delbbsno}
+	</delete>
+	
+	<update id="increaseViewcnt" parameterType="com.hong.vo.BbsVO">
+		UPDATE hongpage.TB_BRD 
+		SET viewcnt = viewcnt + 1 
+		WHERE BRD_NO = #{bNum}
+	</update>
+</mapper>
+
+
