@@ -5,9 +5,11 @@ public class FileVO {
 	public FileVO() {}
 	
 	private String fno;
-	private String fname;
+	private String fsvname;
 	private String fdate;
-	private String fbno;
+	private String bno;
+	private String fpath;
+	private String fogname;
 	
 	public String getFno() {
 		return fno;
@@ -16,10 +18,10 @@ public class FileVO {
 		this.fno = fno;
 	}
 	public String getFname() {
-		return fname;
+		return fsvname;
 	}
-	public void setFname(String fname) {
-		this.fname = fname;
+	public void setFsvname(String fsvname) {
+		this.fsvname = fsvname;
 	}
 	public String getFdate() {
 		return fdate;
@@ -28,10 +30,22 @@ public class FileVO {
 		this.fdate = fdate;
 	}
 	public String getBno() {
-		return fbno;
+		return bno;
 	}
-	public void setBno(String fbno) {
-		this.fbno = fbno;
+	public void setBno(String bno) {
+		this.bno = bno;
+	}
+	public String getFpath() {
+		return fpath;
+	}
+	public void setFpath(String fpath) {
+		this.fpath = fpath;
+	}
+	public String getFogname() {
+		return fogname;
+	}
+	public void setFogname(String fogname) {
+		this.fogname = fogname;
 	}
 	
 }

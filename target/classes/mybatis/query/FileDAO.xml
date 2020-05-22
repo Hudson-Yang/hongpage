@@ -4,16 +4,18 @@
 
 	<resultMap type="com.hong.vo.FileVO" id="FileVO">
 		<result property="fno" column="file_no"/>
-		<result property="fname" column="file_name"/>
+		<result property="fsvname" column="file_svname"/>
 		<result property="fdate" column="file_regdate"/>
 		<result property="bno" column="file_brdno"/>
+		<result property="fpath" column="file_path"/>
+		<result property="fogname" column="file_ogname"/>
 	</resultMap>
 	
 	<insert id="insertFile" parameterType="com.hong.vo.FileVO">
 		INSERT INTO hongpage.TB_FILE
-			( file_name, file_regdate, file_brdno )
+			( file_svname, file_regdate, file_brdno, file_path, file_ogname )
 		VALUES
-			( #{fname}, NOW(),#{bno} )
+			( #{fsvname}, NOW(), #{bno}, #{fpath}, #{fogname} )
 	</insert>
 
 </mapper>

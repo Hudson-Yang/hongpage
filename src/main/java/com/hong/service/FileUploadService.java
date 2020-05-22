@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hong.dao.UserMapper;
-import com.hong.vo.BbsVO;
+import com.hong.vo.FileVO;
 
 @Service
 public class FileUploadService {
@@ -22,9 +22,8 @@ public class FileUploadService {
 	@Autowired
 	UserMapper userMapper;
 	
-	public void restore(MultipartFile multipartFile) {
+	public void restore(MultipartFile multipartFile, String bno) {
 		String url = null;
-		
 		try {
 			// 파일 정보
 			String originFilename = multipartFile.getOriginalFilename();
@@ -44,12 +43,22 @@ public class FileUploadService {
 			writeFile(multipartFile, saveFileName);
 			url = PREFIX_URL + saveFileName;
 			System.out.println("saveFilePath : "+url);
-			userMapper.insertFile(url);
+			System.out.println("bbsno : "+bno);
+			
+			FileVO filevo = new FileVO();
+			filevo.setBno(bno);
+			filevo.setFpath(url);
+			filevo.setFogname(originFilename);
+			filevo.setFsvname(saveFileName);
+			
+			userMapper.insertFile(filevo);
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	
 	
 	// 현재 시간을 기준으로 파일 이름 생성
 	private String genSaveFileName(String extName) {

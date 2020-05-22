@@ -275,17 +275,17 @@ public class HomeController {
 		System.out.println("내용 : "+param.getContent());
 		System.out.println("날짜 : "+param.getDate());
 		
-		System.out.println("글번호 : " + param.getBno());
-		
 		List<MultipartFile> files = request.getFiles("file1");
 		System.out.println("files : " + files);
 		
+		userService.insertBbs(param);
+		System.out.println("글번호 : " + param.getBno());
 		if(files.get(0).getSize()>0) { 
 			for (MultipartFile multipartFile : files) {
-				fileUploadService.restore(multipartFile);
+				fileUploadService.restore(multipartFile,param.getBno());
 			}
 		}
-		userService.insertBbs(param);
+		
 		
 		ModelAndView mav = null;
 		mav = new ModelAndView();

@@ -24,5 +24,6 @@ public interface UserMapper {
 	public List<BbsVO> selectList(Map<String, Object> listMap);
 	public boolean increaseViewcnt(int bNum) throws Exception;
 	
-	public int insertFile(String fname);
+	public int insertFile(FileVO fileinfo);
+	
 }
