@@ -7,7 +7,7 @@
 		<result property="writer" column="CUSER"/>
 		<result property="subject" column="BRD_TIT"/>
 		<result property="content" column="BRD_DESCR"/>
-		<result property="date" column="CDATE"/>
+		<result property="date" column="CDATE"/> <!-- 조회수 프로퍼티 추가하기 -->
 	</resultMap>
 	
 	<!-- 게시글 전체목록 조회 및 검색조회  -->
@@ -58,7 +58,7 @@
 	<select id="selectBbs" parameterType="com.hong.vo.BbsVO" resultMap="BbsVO">
 		SELECT BRD_NO, CUSER, BRD_TIT, BRD_DESCR, CDATE, viewcnt
 		FROM hongpage.TB_BRD
-		WHERE BRD_NO=#{bNum};
+		WHERE BRD_NO=#{bno};
 	</select>
 	 
 	<select id="rowCount" resultType="int">
@@ -87,7 +87,7 @@
 	<update id="increaseViewcnt" parameterType="com.hong.vo.BbsVO">
 		UPDATE hongpage.TB_BRD 
 		SET viewcnt = viewcnt + 1 
-		WHERE BRD_NO = #{bNum}
+		WHERE BRD_NO = #{bno}
 	</update>
 </mapper>
 

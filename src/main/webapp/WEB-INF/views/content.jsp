@@ -8,29 +8,7 @@
 <meta name="viewport" content="width=device-width" initial-scale="1">
 <script src="resources/js/jquery-1.11.0.min.js"></script>
 <script src="resources/js/bootstrap.js"></script>
-
-<script>	
-
-	function bbsUpdate(){
-		var updatebbsno = document.getElementById("bno").value;
-		location.href="${path}/update.do?updatebbsno="+updatebbsno;
-	}
-	
-	function bbsBack(){
-		history.back();
-	}
-	
-	function bbsDelete(){
-		var delbbsno = document.getElementById("bno").value;
-		if(confirm("삭제하시겠습니까?")){
-			location.href="delete.do?delbbsno="+delbbsno;
-		}
-		else{
-			return;
-		}
-	}
-</script>
-
+<!-- <script src="resources/js/content.js"></script> -->
 <title>Insert title here</title>
 </head>
 <body>
@@ -42,33 +20,38 @@
 				<tr>
 					<th>글번호</th>
 					<td colspan="5">${row.bno}</td>
-					<input type="hidden" name="no" value="${row.bno}" id="no"/>
+					<input type="hidden" name="no" value="${row.bno}" id="bno"/>
 				</tr>
 				<tr>
 					<th>작성자</th>
 					<td>${row.writer}</td>
-					<!--  <input type="hidden" name="writer" value="${row.writer}"/> -->
 					<th>작성일</th>
 					<td>${row.date}</td>
-					<!-- <input type="hidden" name="date" value="${row.date}"/> -->
 					<th>조회수</th>
 					<td>${row.viewcnt}</td>
-					<!--<input type="hidden" name="subject" value="${row.viewcnt}"/>-->
 				</tr>
 				<tr>
 					<th>제목</th>
 					<td colspan="4">${row.subject}</td>
-					<!-- <input type="hidden" name="subject" value="${row.subject}"/> -->
 				</tr>
-				 
 				<tr>
 					<td colspan="4">
 	                	${row.content}
 					</td>
 				</tr>
+
 				</c:forEach>
+				<tr>
+					<th>첨부파일</th>
+                        <c:forEach items="${fList}" var="frow">
+                        <td colspan="3">
+                            <a href="${path}/fileDownload.do?fno=${frow.fno}" name="file">${frow.fsvname}</a>
+                            (${frow.fsize} KB)
+                        </td>
+                        </c:forEach>                 
+            	</tr>
 				<tr align="center">
-					<td  colspan="5">
+					<td colspan="5">
 						<button type="button" class="btn btn-default" onclick="bbsUpdate()">수정</button>
 						<button type="button" class="btn btn-default" onclick="bbsDelete()">삭제</button>
 						<button type="button" class="btn btn-default" onclick="bbsBack()">목록으로</button>

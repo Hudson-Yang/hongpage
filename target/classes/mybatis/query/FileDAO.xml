@@ -9,13 +9,39 @@
 		<result property="bno" column="file_brdno"/>
 		<result property="fpath" column="file_path"/>
 		<result property="fogname" column="file_ogname"/>
+		<result property="fsize" column="file_size"/>
 	</resultMap>
 	
 	<insert id="insertFile" parameterType="com.hong.vo.FileVO">
 		INSERT INTO hongpage.TB_FILE
-			( file_svname, file_regdate, file_brdno, file_path, file_ogname )
+			( file_svname, file_regdate, file_brdno, file_path, file_ogname, file_size )
 		VALUES
-			( #{fsvname}, NOW(), #{bno}, #{fpath}, #{fogname} )
+			( #{fsvname}, NOW(), #{bno}, #{fpath}, #{fogname}, #{fsize} )
 	</insert>
-
+	
+	<select id="selectFile" parameterType="String" resultMap="FileVO">
+       	SELECT
+           file_no,
+           file_ogname,
+           file_svname,
+           file_path,
+           ROUND(file_size/1024) AS file_size
+       	FROM
+           hongpage.TB_FILE
+       	WHERE
+           file_brdno=#{bno}
+	</select> 
+	
+	<select id="downloadFile" parameterType="String" resultMap="FileVO">
+       	SELECT
+           file_no,
+           file_ogname,
+           file_svname,
+           file_path,
+           file_size
+       	FROM
+           hongpage.TB_FILE
+       	WHERE
+           file_no=#{fno}
+	</select> 
 </mapper>

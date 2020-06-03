@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
 		return userMapper.countArticle( articleMap );
 	}
 	
-	public List<BbsVO> selectAllBbs(int pNum){
-		return userMapper.selectAllBbs(pNum);
+	public List<BbsVO> selectAllBbs(int pno){
+		return userMapper.selectAllBbs(pno);
 	}
 	@Override
 	public int rowCount() {
@@ -55,8 +55,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public List<BbsVO> selectBbs(int bNum) {
-		return userMapper.selectBbs(bNum);
+	public List<BbsVO> selectBbs(String bno) {
+		return userMapper.selectBbs(bno);
 	}
 
 	@Override
@@ -75,8 +75,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public boolean increaseViewcnt(int bNum) throws Exception{
-		return userMapper.increaseViewcnt(bNum);
+	public boolean increaseViewcnt(String bno) throws Exception{
+		return userMapper.increaseViewcnt(bno);
 	}
 }//
 

@@ -1,6 +1,8 @@
 package com.hong.seung;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,7 @@ import com.hong.service.BoardPager;
 import com.hong.service.FileUploadService;
 import com.hong.service.UserService;
 import com.hong.vo.BbsVO;
+import com.hong.vo.FileVO;
 import com.hong.vo.UserVO;
 
 /**
@@ -45,7 +49,6 @@ public class HomeController {
 	private UserService userService;
 	@Autowired
 	FileUploadService fileUploadService;
-	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -157,7 +160,6 @@ public class HomeController {
 		System.out.println("param.getUserEmail >>> : " + param.getUseremail());
 		System.out.println("param.getUserPW >>> : " + param.getUserpw());
 		System.out.println("param.getUserName >>> : " + param.getUsername());
-		System.out.println("param.getUserGender >>> : " + param.getUsergender());
 		
 		try{
 			int result = userService.insertUser(param);
@@ -233,14 +235,13 @@ public class HomeController {
 								HttpSession session, HttpServletResponse response, @RequestParam HashMap<String, String> map) throws Exception{
 		System.out.println("-----HomeController bbsContent()------");
 
-		int bNum = Integer.parseInt(request.getParameter("bNum"));
-		System.out.println("bNum >>> : " + bNum);
+		String bno = request.getParameter("bno");
+		System.out.println("bno >>> : " + bno);
 		
-		userService.increaseViewcnt(bNum);
+		userService.increaseViewcnt(bno);
 		
-		List<BbsVO> bList = userService.selectBbs(bNum);
-		System.out.println("bList >>> : " + bList);
-		
+		List<BbsVO> bList = userService.selectBbs(bno);
+		System.out.println("bList : " + bList);
 		System.out.println("글번호 : "+bList.get(0).getBno());
 		System.out.println("작성자 : "+bList.get(0).getWriter());
 		System.out.println("제목 : "+bList.get(0).getSubject());
@@ -248,12 +249,62 @@ public class HomeController {
 		System.out.println("작성날짜 : "+bList.get(0).getDate());
 		System.out.println("조회수 : "+bList.get(0).getViewcnt());
 		
+		List<FileVO> fList = fileUploadService.selectFile(bno);
+		if(!fList.isEmpty()) {
+			int fc = fList.size();
+			System.out.println("-첨부된 파일-");
+			System.out.println("첨부파일 갯수 : "+fc);
+			System.out.println("fList : "+fList);
+			for(int c = 0 ; c <= (fc-1) ; c++) {
+				System.out.println("파일번호 : "+fList.get(c).getFno());
+				System.out.println("파일이름 : "+fList.get(c).getFogname());
+				System.out.println("파일크기 : "+fList.get(c).getFsize()+" kB");
+				System.out.println("파일형식 : "+FilenameUtils.getExtension(fList.get(c).getFogname()));
+				System.out.println("파일위치 : "+fList.get(c).getFpath());
+				System.out.println("--------");
+			}
+		}
+		System.out.println();
 		ModelAndView mav = null;
 		mav = new ModelAndView();		
-		mav.addObject("bNum", bNum);
+		mav.addObject("bno", bno);
 		mav.addObject("bList", bList);
+		mav.addObject("fList", fList);
 		mav.setViewName("/content");
 		return mav;
+	}
+	
+	@RequestMapping(value="/fileDownload.do", method=RequestMethod.GET)
+	public void filedownload(HttpServletResponse response,HttpServletRequest request) {
+		System.out.println("-----HomeController fileDownload()------");
+		
+		String fno = request.getParameter("fno");
+		System.out.println("다운로드 요청파일번호 : "+fno);
+		FileVO fList = fileUploadService.downloadFile(fno);
+		System.out.println(fList);
+		System.out.println(fList.getFno());
+		System.out.println(fList.getFogname());
+		System.out.println(fList.getFsize());
+		System.out.println(FilenameUtils.getExtension(fList.getFsvname()));
+		System.out.println(fList.getFpath());
+		System.out.println();
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fList.getFsvname() + "\";");
+        response.setHeader("Content-Transfer-Encoding", "binary"); 
+        response.setHeader("Content-Type", FilenameUtils.getExtension(fList.getFsvname()));
+        response.setHeader("Content-Length", "" + fList.getFsize());
+        response.setHeader("Pragma", "no-cache;");
+        response.setHeader("Expires", "-1;");
+        
+        try(FileInputStream fis = new FileInputStream(fList.getFpath());
+        		OutputStream out = response.getOutputStream();){
+        	int readcnt = 0;
+        	byte[] buffer = new byte[1024];
+        	while((readcnt = fis.read(buffer)) != -1) {
+        		out.write(buffer,0,readcnt);
+        	}
+        }catch(Exception ex){
+            throw new RuntimeException("file Save Error:::"+ex.getMessage());
+        }
 	}
 	
 	@RequestMapping(value="/write.do")
@@ -312,15 +363,15 @@ public class HomeController {
 	public ModelAndView update(@ModelAttribute BbsVO param, HttpServletRequest request){
 		System.out.println("-------HomeController update()-------");
 	
-		int bNum = Integer.parseInt(request.getParameter("updatebbsno"));
-		System.out.println("수정할 bNum >>> : " + bNum);
+		String bno = request.getParameter("updatebbsno");
+		System.out.println("수정할 bno >>> : " + bno);
 		
-		List<BbsVO> bList = userService.selectBbs(bNum);
+		List<BbsVO> bList = userService.selectBbs(bno);
 		System.out.println("수정할 bList >>> : " + bList);
 		
 		ModelAndView mav = null;
 		mav = new ModelAndView();
-		mav.addObject("bNum", bNum);
+		mav.addObject("bno", bno);
 		mav.addObject("bList", bList);
 		mav.setViewName("/update");
 		return mav;
@@ -338,7 +389,7 @@ public class HomeController {
 		
 		ModelAndView mav = null;
 		mav = new ModelAndView();
-		mav.setViewName("redirect:/bbsContent.do?bNum="+param.getBno());
+		mav.setViewName("redirect:/bbsContent.do?bno="+param.getBno());
 		return mav;
 	}
 	

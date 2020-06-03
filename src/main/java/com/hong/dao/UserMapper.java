@@ -13,17 +13,19 @@ public interface UserMapper {
 
 	public int insertUser(UserVO param);
 	public UserVO loginUser(UserVO param);
-	public List<BbsVO> selectAllBbs(int pNum);
-	public List<BbsVO> selectBbs(int bNum);
+	public List<BbsVO> selectAllBbs(int pno);
+	public List<BbsVO> selectBbs(String bno);
 	public int rowCount();
-	public int insertBbs(BbsVO param);
+	public int insertBbs(BbsVO param); 
 	public int updateBbs(BbsVO param);
 	public int deleteBbs(String delbbsno);
 	
 	public int countArticle(Map<String, String> articleMap);
 	public List<BbsVO> selectList(Map<String, Object> listMap);
-	public boolean increaseViewcnt(int bNum) throws Exception;
+	public boolean increaseViewcnt(String bno) throws Exception;
 	
 	public int insertFile(FileVO fileinfo);
+	public List<FileVO> selectFile(String bno);
+	public FileVO downloadFile(String fno);
 	
 }

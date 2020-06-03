@@ -10,6 +10,7 @@ public class FileVO {
 	private String bno;
 	private String fpath;
 	private String fogname;
+	private long fsize;
 	
 	public String getFno() {
 		return fno;
@@ -17,7 +18,7 @@ public class FileVO {
 	public void setFno(String fno) {
 		this.fno = fno;
 	}
-	public String getFname() {
+	public String getFsvname() {
 		return fsvname;
 	}
 	public void setFsvname(String fsvname) {
@@ -47,5 +48,10 @@ public class FileVO {
 	public void setFogname(String fogname) {
 		this.fogname = fogname;
 	}
-	
+	public long getFsize() {
+		return fsize;
+	}
+	public void setFsize(long fsize) {
+		this.fsize = fsize;
+	}
 }

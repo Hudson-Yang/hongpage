@@ -7,7 +7,6 @@ public class UserVO {
 	private String useremail;
 	private String userpw;
 	private String username;
-	private String usergender;
 
 	public String getUseremail() {
 		return useremail;
@@ -26,12 +25,6 @@ public class UserVO {
 	}
 	public void setUsername(String username) {
 		this.username = username;
-	}
-	public String getUsergender() {
-		return usergender;
-	}
-	public void setUsergender(String usergender) {
-		this.usergender = usergender;
 	}
 	
 }//
