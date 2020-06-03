@@ -1,25 +1,21 @@
+'use strict';
+
 $(document).ready(function() {
-	$('#bbsUpdate').val(bbsUpdate());
-	$('#bbsDelete').val(bbsDelete());
+	$(".js-btnUpdate").click(function() {
+		const updatebbsno = document.querySelector(".bno").value;
+		location.href = "/update.do?updatebbsno=" + updatebbsno;
+	});
+
+	$(".js-btnDelete").click(function() {
+		const delbbsno = document.querySelector(".bno").value;
+		if (confirm("삭제하시겠습니까?")) {
+			location.href = "delete.do?delbbsno=" + delbbsno;
+		} else {
+			return;
+		}
+	});
+
+	$(".js-btnList").click(function() {
+		history.back();
+	});
 });
-
-function bbsUpdate() {
-	var updatebbsno = document.getElementById("bno").value;
-	alert("수정");
-	location.href = "${path}/update.do?updatebbsno=" + updatebbsno;
-}
-
-function bbsDelete(){
-	var delbbsno = document.getElementById("bno").value;
-	alert("삭제");
-	if(confirm("삭제하시겠습니까?")){
-		location.href="delete.do?delbbsno="+delbbsno;
-	}
-	else{
-		return;
-	}
-}
-
-function bbsBack(){
-	history.back();
-}

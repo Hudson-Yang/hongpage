@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width" initial-scale="1">
 <script src="resources/js/jquery-1.11.0.min.js"></script>
 <script src="resources/js/bootstrap.js"></script>
-<!-- <script src="resources/js/content.js"></script> -->
+<script src="resources/js/content.js"></script>  
 <title>Insert title here</title>
 </head>
 <body>
@@ -20,7 +20,7 @@
 				<tr>
 					<th>글번호</th>
 					<td colspan="5">${row.bno}</td>
-					<input type="hidden" name="no" value="${row.bno}" id="bno"/>
+					<input type="hidden" name="bno" value="${row.bno}" class="bno"/>
 				</tr>
 				<tr>
 					<th>작성자</th>
@@ -52,9 +52,9 @@
             	</tr>
 				<tr align="center">
 					<td colspan="5">
-						<button type="button" class="btn btn-default" onclick="bbsUpdate()">수정</button>
-						<button type="button" class="btn btn-default" onclick="bbsDelete()">삭제</button>
-						<button type="button" class="btn btn-default" onclick="bbsBack()">목록으로</button>
+						<button type="button" class="btn btn-default js-btnUpdate">수정</button>
+						<button type="button" class="btn btn-default js-btnDelete">삭제</button>
+						<button type="button" class="btn btn-default js-btnList">목록으로</button>
 					</td>
 				</tr>
 			</table>
