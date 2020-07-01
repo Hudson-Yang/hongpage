@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width" initial-scale="1">
 <script src="resources/js/jquery-1.11.0.min.js"></script>
 <script src="resources/js/bootstrap.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script>
 
 	$(document).ready(function(){
@@ -40,11 +41,14 @@
 	}
 	
 </script>
-
+<style>.logo{
+text-align: center;
+font-size: xx-large;}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
-
+<div class="logo"><a href="main.do">HongPage</a><hr></div>
 	<div class="container-fluid">
 		<table class="table table-bordered">
 			<form class="frm" method="post" enctype="multipart/form-data">
@@ -54,22 +58,22 @@
 			</tr>
 			<tr>
 				<th align="center" style="text-align: center;">제목</th>
-				<td colspan="3"><input type="text" class="form-control" id="subject" name="subject" placeholer="제목을 입력해주세요"></td>
+				<td colspan="2"><input type="text" class="form-control" id="subject" name="subject" placeholder="제목을 입력해주세요"></td>
 			</tr>
 			
 			<tr>
-				<td colspan="4">
-            			<textarea name="content" rows="10" cols="80" style="resize:none;" placeholer="내용을 입력해주세요"></textarea>
+				<td colspan="3">
+            			<textarea name="content" rows="10" style="resize:none;" placeholder="내용을 입력해주세요"></textarea>
             			 <input type="hidden" name="date" id="date" >
 				</td>
 			</tr>
 			<tr>
 				<th align="center" style="text-align: center;">파일첨부</th>
-				<td colspan="3"><input type="file" class="form-control"  name="file1" multiple="multiple"></td>
+				<td colspan="2"><input type="file" class="form-control"  name="file1" multiple="multiple"></td>
 			</tr>
 			</form>
 			<tr align="center">
-				<td  colspan="4">
+				<td  colspan="3">
 					<button type="button" class="btn btn-default" onclick="bbsWrite()">등록</button>
 					<button type="button" class="btn btn-default" onclick="bbsBack()">취소</button>
 				</td>

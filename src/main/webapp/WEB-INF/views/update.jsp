@@ -5,9 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width" initial-scale="1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script src="resources/js/jquery-1.11.0.min.js"></script>
-<script src="resources/js/bootstrap.js"></script>
+
 <script>
 
 	function bbsUpdate(){
@@ -19,10 +21,14 @@
 	}
 
 </script>
-
-<title>Insert asd here</title>
+<style>.logo{
+text-align: center;
+font-size: xx-large;}
+</style>
+<title>게시글 수정</title>
 </head>
 <body>
+<div class="logo"><a href="main.do">HongPage</a><hr></div>
 	<div class="container-fluid">
 		<form class="content" action="updateAction.do" method="post">
 			<table class="table table-bordered">
@@ -49,6 +55,18 @@
 					</td>
 				</tr>
 				</c:forEach>
+				<tr>
+					<th>첨부파일</th>
+                        <c:forEach items="${fList}" var="frow">
+                        <td colspan="3">
+                            ${frow.fsvname} (${frow.fsize} KB)
+                        </td>
+                        </c:forEach>                 
+            	</tr>
+			<tr>
+				<th align="center" style="text-align: center;">파일첨부</th>
+				<td colspan="3"><input type="file" class="form-control"  name="file2" multiple="multiple"></td>
+			</tr>
 				<tr align="center">
 					<td  colspan="4">
 						<button type="submit" class="btn btn-default" onclick="bbsUpdate()">수정</button>

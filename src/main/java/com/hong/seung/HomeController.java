@@ -134,7 +134,7 @@ public class HomeController {
 			
 		ModelAndView mav = null;
 		mav = new ModelAndView();		
-		mav.setViewName("redirect:/main.jsp");
+		mav.setViewName("redirect:/main.do");
 			
 		return mav;
 	}
@@ -180,7 +180,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/bbsList1")
-	public ModelAndView BBS1(Locale locale, Model model, HttpServletRequest request ) throws Exception{
+	public ModelAndView BBS1(Locale locale, Model model, HttpServletRequest request) throws Exception{
 		System.out.println("-----HomeController bbs1List()-----");
 		int rowcount = userService.rowCount();       
 		System.out.println("rowcount >>> "+rowcount);
@@ -283,7 +283,7 @@ public class HomeController {
 		FileVO fList = fileUploadService.downloadFile(fno);
 		System.out.println(fList);
 		System.out.println(fList.getFno());
-		System.out.println(fList.getFogname());
+		System.out.println(fList.getFsvname());
 		System.out.println(fList.getFsize());
 		System.out.println(FilenameUtils.getExtension(fList.getFsvname()));
 		System.out.println(fList.getFpath());
@@ -337,7 +337,6 @@ public class HomeController {
 			}
 		}
 		
-		
 		ModelAndView mav = null;
 		mav = new ModelAndView();
 		mav.setViewName("redirect:/bbsList1.do?curpage=1");
@@ -350,12 +349,13 @@ public class HomeController {
 		System.out.println("-----HomeController delete()-----");
 		String delbbsno = request.getParameter("delbbsno");
 		System.out.println("delbbsno : " + delbbsno);
-
+		
+		fileUploadService.deleteFile(delbbsno);
 		userService.deleteBbs(delbbsno);
 		
 		ModelAndView mav = null;
 		mav = new ModelAndView();
-		mav.setViewName("redirect:/bbs1List.do?curpage=1");
+		mav.setViewName("redirect:/bbsList1.do?curpage=1");
 		return mav;
 	}
 	
@@ -369,16 +369,34 @@ public class HomeController {
 		List<BbsVO> bList = userService.selectBbs(bno);
 		System.out.println("수정할 bList >>> : " + bList);
 		
+		List<FileVO> fList = fileUploadService.selectFile(bno);
+		if(!fList.isEmpty()) {
+			int fc = fList.size();
+			System.out.println("-첨부된 파일-");
+			System.out.println("첨부파일 갯수 : "+fc);
+			System.out.println("fList : "+fList);
+			for(int c = 0 ; c <= (fc-1) ; c++) {
+				System.out.println("파일번호 : "+fList.get(c).getFno());
+				System.out.println("파일이름 : "+fList.get(c).getFogname());
+				System.out.println("파일크기 : "+fList.get(c).getFsize()+" kB");
+				System.out.println("파일형식 : "+FilenameUtils.getExtension(fList.get(c).getFogname()));
+				System.out.println("파일위치 : "+fList.get(c).getFpath());
+				System.out.println("--------");
+			}
+		}
+		System.out.println();
+		
 		ModelAndView mav = null;
 		mav = new ModelAndView();
 		mav.addObject("bno", bno);
 		mav.addObject("bList", bList);
+		mav.addObject("fList", fList);
 		mav.setViewName("/update");
 		return mav;
 	}
 	
 	@RequestMapping(value="/updateAction.do")
-	public ModelAndView updateAction(@ModelAttribute BbsVO param, HttpServletRequest request) {
+	public ModelAndView updateAction(@ModelAttribute BbsVO param, MultipartHttpServletRequest request) {
 		System.out.println("-----HomeController updateAction()-----");
 
 		System.out.println("작성자 : "+param.getWriter());
@@ -387,6 +405,13 @@ public class HomeController {
 		System.out.println("수정한 날짜 : "+param.getDate());
 		userService.updateBbs(param);
 		
+		List<MultipartFile> files = request.getFiles("file2");
+		System.out.println("files : " + files);
+		if(files.get(0).getSize()>0) { 
+			for (MultipartFile multipartFile : files) {
+				fileUploadService.restore(multipartFile,param.getBno());
+			}
+		}
 		ModelAndView mav = null;
 		mav = new ModelAndView();
 		mav.setViewName("redirect:/bbsContent.do?bno="+param.getBno());

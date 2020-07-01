@@ -57,7 +57,6 @@ public class FileUploadService {
 	}
 	
 	
-	
 	// 현재 시간을 기준으로 파일 이름 생성
 	private String genSaveFileName(String extName) {
 		String fileName = "";
@@ -94,5 +93,8 @@ public class FileUploadService {
 	}
 	public FileVO downloadFile(String fno) {
 		return userMapper.downloadFile(fno);
+	}
+	public int deleteFile(String delbbsno) {
+		return userMapper.deleteFile(delbbsno);
 	}
 }

@@ -6,6 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script>
 
 	function bbsWrite(){
@@ -18,16 +21,21 @@
 	}
 	
 </script>
-
+<style>
+.logo{
+text-align: center;
+font-size: xx-large;}
+</style>
+<title>게시판</title>
 </head>
 <body>
-<div><a href="main.do">HongPage</a></div>
+<div class="logo"><a href="main.do">HongPage</a></div>
 <hr>
 	<div class="container-fluid text-center">    
   		<div class="row content">
 	    	<div class="col-sm-12 text-left">
 	    		<div class="container">
-	    	<%-- <form name="form1" method="post" action="${path}/bbsList1.do">
+	    	 <%-- <form name="form1" method="post" action="${path}/bbsList1.do">
 		<select name="searchOption">
 			<!-- 검색조건을 검색처리후 결과화면에 보여주기위해  c:out 출력태그 사용, 삼항연산자 -->
 			<option value="all" <c:out value="${listMap.searchOption == 'all'?'selected':''}"/> >제목+이름+제목</option>
@@ -38,23 +46,23 @@
 		<input name="keyword" value="${listMap.keyword}">
 		<input type="hidden" name="curpage" value="${listMap.boardPager.curPage}">
 		<input type="submit" value="조회">
-		</form> --%>
+		</form> --%> 
 		${listMap.count}개의 게시물 
 						<table class="table" id="Spreadsheet">
 							<tr>
-								<th class="col-md-1">#</th>
-								<th class="col-md-6">Subject</th>
-								<th class="col-md-3">Writer</th>
-								<th class="col-md-2">Date</th>
-								<th class="col-md-3">Views</th>
+								<th>No</th>
+								<th class="col-xs-5">Subject</th>
+								<th class="col-xs-3">Writer</th>
+								<th class="col-xs-2">Date</th>
+								<th class="col-xs-1">Views</th>
 							</tr>
 					 		<c:forEach items="${listMap.list}" var="row">
 								<tr>
 									<td>${row.bno}</td>
-						   	        <td><a href="bbsContent.do?bno=${row.bno}">${row.subject}</a></td> 
-									<td>${row.writer}</td>
-									<td>${row.date}</td>
-									<td>${row.viewcnt}</td>
+						   	        <td class="col-xs-5"><a href="bbsContent.do?bno=${row.bno}">${row.subject}</a></td> 
+									<td class="col-xs-3">${row.writer}</td>
+									<td class="col-xs-2">${row.date}</td>
+									<td class="col-xs-1">${row.viewcnt}</td>
 								</tr>
 							</c:forEach>
 						</table>
@@ -102,11 +110,7 @@
 				</c:if>
 			</td>
 		</tr>
-		<br/>
-		
-						<div>
-							<button type="button" class="btn btn-default" onclick="bbsWrite()">글쓰기</button>
-						</div>
+						<button type="button" class="btn btn-default" onclick="bbsWrite()" style="float:right;">글쓰기</button>
 					</div>
 				</div>
 	    	</div>

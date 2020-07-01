@@ -3,8 +3,6 @@ package com.hong.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.hong.vo.BbsVO;
 import com.hong.vo.FileVO;
 import com.hong.vo.UserVO;
@@ -27,5 +25,6 @@ public interface UserMapper {
 	public int insertFile(FileVO fileinfo);
 	public List<FileVO> selectFile(String bno);
 	public FileVO downloadFile(String fno);
+	public int deleteFile(String delbbsno);
 	
 }

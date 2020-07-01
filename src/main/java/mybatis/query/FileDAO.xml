@@ -44,4 +44,9 @@
        	WHERE
            file_no=#{fno}
 	</select> 
+	
+	<delete id="deleteFile">
+		DELETE FROM hongpage.TB_FILE
+		WHERE file_brdno=#{delbbsno}
+	</delete>
 </mapper>

@@ -8,11 +8,16 @@
 <meta name="viewport" content="width=device-width" initial-scale="1">
 <script src="resources/js/jquery-1.11.0.min.js"></script>
 <script src="resources/js/bootstrap.js"></script>
-<script src="resources/js/content.js"></script>  
-<title>Insert title here</title>
+<script src="resources/js/content.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">  
+<style>.logo{
+text-align: center;
+font-size: xx-large;}
+</style>
+<title>게시판</title>
 </head>
 <body>
-
+<div class="logo"><a href="main.do">HongPage</a><hr></div>
 	<div class="container-fluid">
 		<form class="frm" method="post" action="update.do">
 			<table class="table table-bordered">

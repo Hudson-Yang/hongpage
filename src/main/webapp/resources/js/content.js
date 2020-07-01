@@ -10,6 +10,7 @@ $(document).ready(function() {
 		const delbbsno = document.querySelector(".bno").value;
 		if (confirm("삭제하시겠습니까?")) {
 			location.href = "delete.do?delbbsno=" + delbbsno;
+			
 		} else {
 			return;
 		}
