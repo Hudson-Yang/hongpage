@@ -78,5 +78,17 @@ public class UserServiceImpl implements UserService {
 	public boolean increaseViewcnt(String bno) throws Exception{
 		return userMapper.increaseViewcnt(bno);
 	}
+	
+	@Override
+	public int emailchk(String useremail) {
+		return userMapper.emailchk(useremail);
+	}
+	
+	@Override
+	public int namechk(String username) {
+		return userMapper.namechk(username);
+	}
+	
+	
 }//
 

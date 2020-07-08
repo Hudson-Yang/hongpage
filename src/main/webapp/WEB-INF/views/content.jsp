@@ -37,10 +37,10 @@ font-size: xx-large;}
 				</tr>
 				<tr>
 					<th>제목</th>
-					<td colspan="4">${row.subject}</td>
+					<td colspan="5">${row.subject}</td>
 				</tr>
 				<tr>
-					<td colspan="4">
+					<td colspan="6">
 	                	${row.content}
 					</td>
 				</tr>
@@ -48,15 +48,17 @@ font-size: xx-large;}
 				</c:forEach>
 				<tr>
 					<th>첨부파일</th>
+                        
+                        <td colspan="5">
                         <c:forEach items="${fList}" var="frow">
-                        <td colspan="3">
                             <a href="${path}/fileDownload.do?fno=${frow.fno}" name="file">${frow.fsvname}</a>
-                            (${frow.fsize} KB)
+                            (${frow.fsize} KB)<br/>
+                         </c:forEach>
                         </td>
-                        </c:forEach>                 
+                 
             	</tr>
 				<tr align="center">
-					<td colspan="5">
+					<td colspan="6">
 						<button type="button" class="btn btn-default js-btnUpdate">수정</button>
 						<button type="button" class="btn btn-default js-btnDelete">삭제</button>
 						<button type="button" class="btn btn-default js-btnList">목록으로</button>

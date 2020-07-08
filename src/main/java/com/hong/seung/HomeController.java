@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -150,16 +150,45 @@ public class HomeController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/emailchk.do", method = RequestMethod.GET)
+	@ResponseBody
+	public int emailchk(@RequestParam("useremail") String useremail) {
+		System.out.println("-----HomeController joinEmailChk()-----");
+		int echk = userService.emailchk(useremail);
+		System.out.println("입력한 이메일 : "+useremail);
+		System.out.print(">중복확인결과 : ");
+		if (echk == 0) {
+			System.out.println("없");
+		}
+		else {
+			System.out.println("있");
+		}
+		return userService.emailchk(useremail);
+	}
+	
+	@RequestMapping(value="/namechk.do", method = RequestMethod.GET)
+	@ResponseBody
+	public int namechk(@RequestParam("username") String username) {
+		System.out.println("-----HomeController joinNameChk()-----");
+		int nchk = userService.namechk(username);
+		System.out.println("입력한 이름 : "+username);
+		System.out.print(">중복확인결과 : ");
+		if (nchk == 0) {
+			System.out.println("없");
+		}
+		else {
+			System.out.println("있");
+		}
+		return userService.namechk(username);
+	}
+	
 	@RequestMapping(value="/joinAction")
 	public ModelAndView joinAction(@ModelAttribute UserVO param, HttpServletRequest request, HttpSession session){
 		System.out.println("-----HomeController joinAction()-----");
 		
-		ArrayList userList = null;
-		userList = new ArrayList();
-		
-		System.out.println("param.getUserEmail >>> : " + param.getUseremail());
-		System.out.println("param.getUserPW >>> : " + param.getUserpw());
-		System.out.println("param.getUserName >>> : " + param.getUsername());
+		System.out.println("param.getUserEmail : " + param.getUseremail());
+		System.out.println("param.getUserPW : " + param.getUserpw());
+		System.out.println("param.getUserName : " + param.getUsername());
 		
 		try{
 			int result = userService.insertUser(param);

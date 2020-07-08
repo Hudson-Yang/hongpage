@@ -79,7 +79,7 @@ font-size: xx-large;}
 						<a href="javascript:list('${listMap.boardPager.prevPage}')">[이전]</a>
 					</c:when>
 					<c:otherwise>
-						<span style="color:grey">[이전]</span>
+						<span style="color:grey">[이전]</span> 
 					</c:otherwise>
 				</c:choose>
 			 	<!-- **하나의 블럭 시작페이지부터 끝페이지까지 반복문 실행 -->

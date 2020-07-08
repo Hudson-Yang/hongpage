@@ -23,4 +23,6 @@ public interface UserService {
 	public int countArticle(String searchOption, String keyword);
 	public boolean increaseViewcnt(String bno) throws Exception;
 	
+	public int emailchk(String useremail);
+	public int namechk(String username);
 }

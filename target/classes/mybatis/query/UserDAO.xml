@@ -6,7 +6,6 @@
 		<result property="useremail" column="USR_ID"/>     
 		<result property="userpw" column="USR_PSWD"/>
 		<result property="username" column="USR_NM"/>
-		<result property="usergender" column="USERGENDER"/>
 	</resultMap>
 	
 	<insert id="insertUser" parameterType="com.hong.vo.UserVO">
@@ -21,5 +20,17 @@
     	FROM TB_USR
 		WHERE USR_ID=#{useremail} AND USR_PSWD=#{userpw}
 	</select>
+	
+	<select id="emailchk" parameterType="String" resultType="int">
+		SELECT COUNT(*) 
+		FROM TB_USR
+		WHERE USR_ID = #{useremail} 
+	</select>
+	<select id="namechk" parameterType="String" resultType="int">
+		SELECT COUNT(*) 
+		FROM TB_USR
+		WHERE USR_NM = #{username} 
+	</select>
+	
 </mapper>
 

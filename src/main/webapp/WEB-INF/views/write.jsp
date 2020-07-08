@@ -41,9 +41,13 @@
 	}
 	
 </script>
-<style>.logo{
+<style>
+.logo{
 text-align: center;
 font-size: xx-large;}
+textarea{
+width:100%;
+resize:none;}
 </style>
 <title>Insert title here</title>
 </head>
@@ -53,23 +57,21 @@ font-size: xx-large;}
 		<table class="table table-bordered">
 			<form class="frm" method="post" enctype="multipart/form-data">
 			<tr>
-				<th class="col-md-1" style="text-align: center;">작성자</th>
-				<td class="col-md-11"><input type="text" class="form-control" id="writer" name="writer" placeholder="작성자를 입력해주세요"></td>
+				<th class="col-xs-1" style="text-align: center;">작성자</th>
+				<td class="col-xs-1"><input type="text" class="form-control" id="writer" name="writer" placeholder="작성자를 입력해주세요"></td>
 			</tr>
 			<tr>
 				<th align="center" style="text-align: center;">제목</th>
-				<td colspan="2"><input type="text" class="form-control" id="subject" name="subject" placeholder="제목을 입력해주세요"></td>
+				<td colspan="1"><input type="text" class="form-control" id="subject" name="subject" placeholder="제목을 입력해주세요"></td>
 			</tr>
-			
 			<tr>
-				<td colspan="3">
-            			<textarea name="content" rows="10" style="resize:none;" placeholder="내용을 입력해주세요"></textarea>
-            			 <input type="hidden" name="date" id="date" >
+				<td colspan="2"><textarea name="content" rows="10" placeholder="내용을 입력해주세요"></textarea>
+            			<input type="hidden" name="date" id="date" >
 				</td>
 			</tr>
 			<tr>
 				<th align="center" style="text-align: center;">파일첨부</th>
-				<td colspan="2"><input type="file" class="form-control"  name="file1" multiple="multiple"></td>
+				<td colspan="1"><input type="file" class="form-control"  name="file1" multiple="multiple"></td>
 			</tr>
 			</form>
 			<tr align="center">

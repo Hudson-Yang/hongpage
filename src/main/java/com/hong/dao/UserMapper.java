@@ -27,4 +27,6 @@ public interface UserMapper {
 	public FileVO downloadFile(String fno);
 	public int deleteFile(String delbbsno);
 	
+	public int emailchk(String useremail);
+	public int namechk(String username);
 }
